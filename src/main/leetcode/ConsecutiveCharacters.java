@@ -31,6 +31,5 @@ public class ConsecutiveCharacters {
         System.out.println(maxPower("abbcccddddeeeeedcba"));
         System.out.println(maxPower("triplepillooooow"));
         System.out.println(maxPower("hooraaaaaaaaaaay"));
-        System.out.println(maxPower("cc"));
     }
 }
