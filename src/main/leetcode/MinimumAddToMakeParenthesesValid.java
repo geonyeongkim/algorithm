@@ -9,8 +9,8 @@ public class MinimumAddToMakeParenthesesValid {
 
     public int minAddToMakeValid(String S) {
         Stack<Character> stack = new Stack<>();
-        for(int i = 0; i < S.length(); i++) {
-            if(S.charAt(i) == ')' && !stack.isEmpty() &&stack.peek() == '(') {
+        for (int i = 0; i < S.length(); i++) {
+            if (S.charAt(i) == ')' && !stack.isEmpty() && stack.peek() == '(') {
                 stack.pop();
                 continue;
             }

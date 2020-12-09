@@ -12,7 +12,8 @@ public class FindValidMatrixGivenRowAndColumnSums {
     * 풀이는 아래와 같았다. ex) rowSum = [3, 8] , colSum = [4, 7]
     * 1. 각 rowSum 값과 colSum의 값들을 비교하며 min 값을 선택한다. -> 3, 4, 7 비교
     * 2. 단, min 값을 colSum에서 감소시킨다. 이유는 colSum도 맞춰야하니, 사용한 값을 감소 시킴.
-    * * 3. 요약해서 min 값을 선택하여 감소시키는 작업은 우선순위로 rowSum을 맞추면서 사용한 값들을 감소시키는 작업이며, 남은 값을 마지막에 사용하여 colSum을 맞춰가는 작업.
+    *
+    * 3. 요약해서 min 값을 선택하여 감소시키는 작업은 우선순위로 rowSum을 맞추면서 사용한 값들을 감소시키는 작업이며, 남은 값을 마지막에 사용하여 colSum을 맞춰가는 작업.
     * */
     public int[][] restoreMatrix(int[] rowSum, int[] colSum) {
         int m = rowSum.length, n = colSum.length;
