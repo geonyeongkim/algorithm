@@ -1,35 +1,50 @@
 package main.leetcode;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * Created by geonyeong.kim on 2020-12-10
  */
 public class MinimumInitialEnergyToFinishTasks {
 
+    /*
+    * 문제 풀이 참고.
+    * actual과 minimum간의 차이로 정렬한 접근까지는 동일
+    *
+    * 답의 경우 actualSum <= answer <= minimumSum 범위를 가지고 있기 때문에 (actualSum + 어떤 순서든 만족하는 최소한의 additional value) 가 된다.
+    * 때문에, 정렬한 값들을 하나씩 비교하면서 최소한의 additional value 를 찾아간다.
+    * 마지막에 minimum 보다 낮다면 tuple의 actual과 minimum의 차이를 더하면 원하는 최소한의 additional value 가 나오게 된다.
+    * */
     public int minimumEffort(int[][] tasks) {
+        Arrays.sort(tasks, (a, b) -> (b[1] - b[0]) - (a[1] - a[0]));
+        int total = 0;
+        for (int[] task: tasks)
+            total += task[0];
+        int res = total;
+        for (int[] task: tasks) {
+            if (task[1] > total)
+                total = task[1];
+            total -= task[0];
+        }
+        return res + total;
+    }
+
+    /*
+    * 이게 내가 푼 풀이...
+    * actual과 minimum간의 차이로 정렬한 접근까지는 맞았으나,
+    * 답의 최소값을 구하는 과정에서 틀림
+    *
+    * 나의 경우는 minimum의 sumation에서 하나씩 빼가면서 답을 구함.
+    * time limit 에 걸려버림.
+    * */
+    public int myMinimumEffort(int[][] tasks) {
         int maxSum = 0;
 
-        Arrays.sort(tasks, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                return (o2[1] - o2[0]) - (o1[1] - o1[0]);
-            }
-        });
-        for(int i = 0; i< tasks.length; i++) {
-            System.out.println("actual -> " + tasks[i][0] + " minimum -> " + tasks[i][1]);
-        }
+        Arrays.sort(tasks, (o1, o2) -> (o2[1] - o2[0]) - (o1[1] - o1[0]));
 
         for(int i = 0; i < tasks.length; i++) {
             maxSum += tasks[i][1];
-//            maxList.add(tasks[i][1]);
         }
-
-//        Collections.sort(maxList, Comparator.reverseOrder());
 
         int result = maxSum;
 
@@ -42,7 +57,6 @@ public class MinimumInitialEnergyToFinishTasks {
                     sum -= tasks[i][0];
                 } else {
                     flag = true;
-                    sum = -1;
                     break;
                 }
             }
@@ -50,42 +64,6 @@ public class MinimumInitialEnergyToFinishTasks {
             if (flag) break;
             result--;
         }
-
-//        int cnt = 0;
-
-//        while(true) {
-//            int maxSum = 0;
-//
-//            for(int i = 0; i < cnt; i++) {
-//                maxSum += maxList.get(i);
-//            }
-//
-//            if(actualSum <= maxSum) {
-//
-//                while(true) {
-//                    int sum = maxSum;
-//                    boolean flag = false;
-//
-//                    for(int i = 0; i< tasks.length; i++) {
-//                        if(tasks[i][1] <= sum) {
-//                            sum -= tasks[i][0];
-//                        } else {
-//                            flag = true;
-//                            sum = -1;
-//                            break;
-//                        }
-//                    }
-//
-//                    if(flag) break;
-//                    maxSum--;
-//                }
-//
-//                result  = maxSum + 1;
-//                break;
-//            } else {
-//                cnt++;
-//            }
-//        }
 
         return result + 1;
     }
