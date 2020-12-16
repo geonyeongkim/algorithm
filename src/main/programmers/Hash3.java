@@ -30,7 +30,12 @@ public class Hash3 {
         subset(arr, cur +1, max);
     }
 
-    public int solution(String[][] clothes) {
+    /*
+    * 내가 풀은 방식.
+    * 각 layer(머리, 눈) 별로 갯수를 담고, 모든 부분집합(= 모든 경우의 수)을 구한 뒤 계산.
+    * 답은 맞으나 테스트 케이스 중 하나가 시간초과 발생.
+    * */
+    public int mySsolution(String[][] clothes) {
         Map<String, Integer> map = new HashMap<>();
         answer = 0;
 
@@ -40,10 +45,22 @@ public class Hash3 {
 
         cntList = new ArrayList<>(map.values());
 
-        /*
-        * 모든 부분집합 구한 뒤, 각 집합의 숫자를 곱한 값을 answer에 더함.
-        * */
         subset(new boolean[cntList.size()], 0, cntList.size());
+
+        return answer - 1;
+    }
+
+    public int solution(String[][] clothes) {
+        Map<String, Integer> map = new HashMap<>();
+        int answer = 1;
+
+        for (String[] cloth : clothes) {
+            map.put(cloth[1], map.getOrDefault(cloth[1], 0) + 1);
+        }
+
+        for(int cnt : map.values()) {
+            answer *= cnt + 1; // 각 layer 갯수 + 해당 layer를 선택하지 않는 경우 1
+        }
 
         return answer - 1;
     }
