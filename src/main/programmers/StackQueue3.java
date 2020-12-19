@@ -1,7 +1,7 @@
 package main.programmers;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+
 
 /**
  * Created by geonyeong.kim on 2020-12-16
@@ -9,44 +9,43 @@ import java.util.Queue;
 public class StackQueue3 {
 
     public int solution(int bridge_length, int weight, int[] truck_weights) {
-        int answer = 0;
-        int[][] arr = new int[truck_weights.length][];
+        int answer = 1, sum = 0, i = 0;
 
-        int len = bridge_length;
+        ArrayList<Truck> q = new ArrayList<>();
 
-        for (int i = 0; i < truck_weights.length; i++) {
-            arr[i] = new int[]{truck_weights[i], 0};
-        }
-        Queue<Integer> queue = new LinkedList<>();
-
-        while(true) {
-            for(int i = 0; i < arr.length; i++) {
-                if(arr[i][1] >= bridge_length) {
-                    continue;
-                }
-                if(arr[i][1] > 0) {
-                    arr[i][1] += 1;
-                    continue;
-                }
-                if(len > 0 && weight >= arr[i][0]) {
-                    weight -= arr[i][0];
-                    queue.add(i);
-                    len--;
-                    arr[i][1] += 1;
-                }
+        while (i < truck_weights.length || q.size()!=0 ) {
+            if (i < truck_weights.length && sum + truck_weights[i] <= weight) {
+                sum += truck_weights[i];
+                q.add(new Truck(truck_weights[i++],answer + bridge_length));
             }
 
             answer++;
 
-            if(queue.isEmpty()) break;
-
-            if(arr[queue.peek()][1] >= bridge_length) {
-                weight += arr[queue.poll()][0];
-                len++;
+            if (q.size()!=0 && answer >= q.get(0).getTime()) {
+                sum -= q.get(0).getWeight();
+                q.remove(0);
             }
         }
 
         return answer;
+    }
+
+    class Truck {
+        private int weight;
+        private int time;
+
+        public Truck(int weight, int time) {
+            this.weight = weight;
+            this.time = time;
+        }
+
+        public int getWeight() {
+            return weight;
+        }
+
+        public int getTime() {
+            return time;
+        }
     }
 
     public static void main(String[] args) {
