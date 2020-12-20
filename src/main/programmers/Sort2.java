@@ -1,9 +1,6 @@
 package main.programmers;
 
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by geonyeong.kim on 2020-12-20
@@ -11,30 +8,23 @@ import java.util.Map;
 public class Sort2 {
 
     public String solution(int[] numbers) {
-        Integer[] arr = new Integer[numbers.length];
-        Map<Integer, String> map = new HashMap<>();
 
+        String[] result = new String[numbers.length];
         for (int i = 0; i < numbers.length; i++) {
-            String strNum = String.valueOf(numbers[i]);
-            while(strNum.length() < 5) {
-                strNum += strNum;
-            }
-            int subInt = Integer.valueOf(strNum.substring(0, 5));
-            arr[i] = subInt;
-            map.put(subInt, String.valueOf(numbers[i]));
+            result[i] = String.valueOf(numbers[i]);
         }
 
-        Arrays.sort(arr, (o1, o2) -> o2-o1);
+        Arrays.sort(result, (o1, o2) -> (o2 + o1).compareTo(o1 + o2));
 
-
-        StringBuilder sb = new StringBuilder();
-        for(int item : arr) {
-            sb.append(map.get(item));
+        if (result[0].equals("0")) {
+            return "0";
         }
 
-        if(sb.charAt(0) == '0') return "0";
-
-        return sb.toString();
+        String answer = "";
+        for (String a : result) {
+            answer += a;
+        }
+        return answer;
     }
 
     public static void main(String[] args) {
@@ -53,7 +43,6 @@ public class Sort2 {
 
         String ans5 = sort2.solution(new int[]{2,20,200});
         System.out.println("ans5 = > " + ans5);
-
 
     }
 }
