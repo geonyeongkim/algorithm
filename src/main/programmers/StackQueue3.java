@@ -1,6 +1,7 @@
 package main.programmers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -11,7 +12,7 @@ public class StackQueue3 {
     public int solution(int bridge_length, int weight, int[] truck_weights) {
         int answer = 1, sum = 0, i = 0;
 
-        ArrayList<Truck> q = new ArrayList<>();
+        List<Truck> q = new ArrayList<>();
 
         while (i < truck_weights.length || q.size()!=0 ) {
             if (i < truck_weights.length && sum + truck_weights[i] <= weight) {
