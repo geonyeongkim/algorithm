@@ -30,6 +30,7 @@ public class Greedy3 {
         return max;
     }
 
+    // number를 순회하면서 앞 숫자보다 큰걸 만나면 앞에를 소거하면서 채우는 방법.
     public String solution(String number, int k) {
         char[] input = number.toCharArray();
 
