@@ -2,54 +2,66 @@ package main.programmers;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by geonyeong.kim on 2020-12-29
  */
 public class Greedy5 {
 
+    /*
+    * 해당 문제의 경우,
+    * 1. 합집합을 통한 노드들간 연결이 되었는지 체크하는 방법!!
+    * 2. 연결 비용으로 오름차순 정렬하여 최소비용으로 연결할 수 있는 방법!!
+    *
+    * 이 두가지를 사용해야함!!
+    * */
     public int solution(int n, int[][] costs) {
         int answer = 0;
 
-        /*
-         * 1. 비용순으로 정렬
-         * 2. for-loop를 돌면서 다리가 놓아져 있는지 체크 : Map<섬 num, Set<이어진 섬 num>>
-         *   2-1. 놓아져있으면 continue;
-         *   2-2. 놓아져있지 않으면 추가;
-         * 3. 모두 연결되었는지 체크: 체크시에는 set을 for-loop돌면서 건너지 않은 섬을 최우선적으로 탐색
-         * 4. 모두 연결되었다면 break; 으로 빠져나옴.
-         * */
-
-        // 1.
-        Arrays.sort(costs, Comparator.comparingInt(o -> o[2]));
-
-        // 2.
-        Map<Integer, Set<Integer>> map = new HashMap<>();
-
-        // 초기화.
-        for (int i = 0; i < n; i++) {
-            map.put(i, new HashSet<>());
+        // 연결이 되었는지 확인하기 위한 최상위 부모 노드를 가리킬수 있는 배열 생성
+        int[] parent = new int[n];
+        for(int i  = 0; i < n; i++) {
+            parent[i] = i;
         }
 
+        // 오름차순 정렬
+        Arrays.sort(costs, Comparator.comparingInt(o -> o[2]));
+
+        /*
+        * 각 노드들이 연결되어 있지 않으면 연결 및 비용 +
+        * 연결되어 있으면 Pass
+        * */
         for(int[] cost : costs) {
-            // check
-
-            // 2-1.
-            map.get(cost[0]).add(cost[1]);
-            map.get(cost[1]).add(cost[0]);
-
-            // 2-2.
-            answer += cost[2];
-
-
-
+            boolean check = check(parent, cost[0], cost[1]);
+            if(check) continue;
+            else {
+                // parent 배열 수정 -> 주어진 from to 노드의 최상위 노드를 찾아 변경해줌!!!
+                int from = getParent(parent, cost[0]);
+                int to = getParent(parent, cost[1]);
+                if(from < to) {
+                    parent[to] = from;
+                } else {
+                    parent[from] = to;
+                }
+                // 비용 더해줌
+                answer += cost[2];
+            }
         }
 
         return answer;
+    }
+
+    private boolean check(int[] parent, int from, int to) {
+        int fromParentNode = getParent(parent, from);
+        int toParentNode = getParent(parent, to);
+
+        return fromParentNode == toParentNode;
+    }
+
+    // 해당 메서드를 재귀하여 최상위 노드를 찾음!!!
+    private int getParent(int[] parent, int node) {
+        if(parent[node] == node) return node;
+        else return getParent(parent, parent[node]);
     }
 
     public static void main(String[] args) {
