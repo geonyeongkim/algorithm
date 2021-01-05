@@ -52,9 +52,7 @@ public class DfsBfs2 {
                 dfs(connectList, check, i);
             }
 
-            /*
-            * 모든 컴퓨터를 돌았는지 체크
-            * */
+            // 모든 컴퓨터를 돌았는지 체크
             boolean flag = true;
             for (boolean b : check) {
                 if (!b) {
