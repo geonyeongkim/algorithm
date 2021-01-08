@@ -1,7 +1,6 @@
 package main.programmers;
 
-import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.Arrays;
 
 /**
  * Created by geonyeong.kim on 2021-01-06
@@ -9,33 +8,29 @@ import java.util.PriorityQueue;
 public class BinarySearchTree1 {
 
     public long solution(int n, int[] times) {
-        long answer = 0, t = 0;
+        long answer = 0;
+        Arrays.sort(times);
+        long start = 0, end = n * (long)times[times.length - 1];
 
-        int[] endTimes = new int[times.length];
+        while (start <= end) {
 
-        while (true) {
-            for (int i = 0; i < endTimes.length; i++) {
-                if (t == endTimes[i]) {
-                    // 어디가 최선일지 idx 를 찾음.
-                    PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(o -> o[0]));
-                    for (int j = 0; j < endTimes.length; j++) {
-                        priorityQueue.add(new int[]{endTimes[j] + times[j], j});
-                    }
-                    int[] ints = priorityQueue.poll();
-                    endTimes[ints[1]] = ints[0];
-                    n--;
-                }
+            long mid = (start + end) / 2;
+            // mid 시간동안 전체 심사대에서 심사할 수 있는 총 인원 수
+            long cnt = 0;
+
+            for (int i = 0; i < times.length; i++) {
+                cnt += mid / (long)times[i];
             }
 
-            if (n == 0) {
-                int max = 0;
-                for (int endTime : endTimes) {
-                    max = Math.max(max, endTime);
-                }
-                answer = max;
-                break;
+            // n명을 처리해야하지만, cnt가 n보다 작으므로 start 시간을 늘리도록 해야함
+            // start = mid + 1 로 이분 탐색이 되도록 해야함
+            if(n > cnt) {
+               start = mid + 1;
+            } else {
+                // 처리는 주어진 n 이상이 되었지만 최소 시간을 찾아야하기 떄문에 end를 mid-1로 하여 시간 찾음.
+                end = mid - 1;
+                answer = mid;
             }
-            t++;
         }
 
         return answer;
@@ -45,14 +40,5 @@ public class BinarySearchTree1 {
         BinarySearchTree1 binarySearchTree1 = new BinarySearchTree1();
         long ans1 = binarySearchTree1.solution(6, new int[]{7, 10});
         System.out.println("ans1 => " + ans1);
-
-//        for (int[] ints : priorityQueue) {
-//            System.out.println("int => " + ints[0] + " , " + ints[1]);
-//        }
-
-//        for (int endTime : endTimes) {
-//            System.out.print(endTime + ", ");
-//        }
-//        System.out.println();
     }
 }
