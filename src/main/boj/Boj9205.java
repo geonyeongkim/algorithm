@@ -1,5 +1,7 @@
 package main.boj;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 /**
@@ -12,38 +14,44 @@ public class Boj9205 {
         Scanner sc = new Scanner(System.in);
         int tc = sc.nextInt();
 
-        String[] answer = new String[tc];
-
         for (int i = 0; i < tc; i++) {
             int marketCnt = sc.nextInt();
             sc.nextLine();
-            /*
-             * 다음 목적지까지 맥주 20개를 가지고 갈수 있는지.
-             * */
-            answer[i] = "happy";
-            int x1 = sc.nextInt(), y1 = sc.nextInt();
-            int remainBeer = 20;
-            for (int j = 0; j < marketCnt + 1; j++) {
-                if (answer[i].equals("sad")) {
-                    continue;
-                }
-                int x2 = sc.nextInt(), y2 = sc.nextInt();
 
-                int distance = Math.abs(x2 - x1) + Math.abs(y2 - y1);
-                remainBeer -= (distance / 50);
+            boolean[] visit = new boolean[marketCnt + 2];
+            int[][] point = new int[marketCnt + 2][2];
+            Queue<int[]> queue = new LinkedList<>();
 
-                if (remainBeer < 0) {
-                    answer[i] = "sad";
-                } else {
-                    remainBeer = 20;
-                }
-                x1 = x2;
-                y1 = y2;
+
+            for (int j = 0; j < marketCnt + 2; j++) {
+                point[j][0] = sc.nextInt();
+                point[j][1] = sc.nextInt();
             }
-        }
 
-        for (String s : answer) {
-            System.out.println(s);
+            int[] start = point[0];
+            int[] end = point[marketCnt + 1];
+
+            queue.add(start);
+            visit[0] = true;
+
+            String answer = "sad";
+            while (!queue.isEmpty()) {
+
+                int[] curr = queue.poll();
+
+                if(curr == end) {
+                    answer = "happy";
+                    break;
+                }
+
+                for (int j = 0; j < marketCnt + 2; j++) {
+                    if(!visit[j] && (Math.abs( point[j][0] - curr[0]) + Math.abs(point[j][1] - curr[1])) <= 1000) {
+                        queue.add(point[j]);
+                        visit[j] = true;
+                    }
+                }
+            }
+            System.out.println(answer);
         }
     }
 }
