@@ -47,23 +47,23 @@ public class Boj1939 {
     private static void dfs(List<List<Bridge>> list, int from, int to, List<Integer> answerList, int weight) {
         visit[from] = true;
         for (Bridge bridge : list.get(from)) {
-            if(bridge.num == to) {
+            if(bridge.to == to) {
                 answerList.add(Math.min(weight, bridge.weight));
                 break;
             }
 
-            if(!visit[bridge.num]) {
-                dfs(list, bridge.num, to, answerList, Math.min(weight, bridge.weight));
+            if(!visit[bridge.to]) {
+                dfs(list, bridge.to, to, answerList, Math.min(weight, bridge.weight));
             }
         }
     }
 
     static class Bridge {
-        int num;
+        int to;
         int weight;
 
         public Bridge(int num, int weight) {
-            this.num = num;
+            this.to = to;
             this.weight = weight;
         }
     }

@@ -9,7 +9,6 @@ import java.util.Scanner;
  */
 public class Boj9205 {
 
-    // bfs로 변경해서 다시 풀이할 것!!
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int tc = sc.nextInt();
