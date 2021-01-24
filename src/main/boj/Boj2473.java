@@ -44,7 +44,6 @@ public class Boj2473 {
                     right--;
             }
         }
-
         System.out.println(answer[0] + " " + answer[1] + " " + answer[2]);
     }
 }
