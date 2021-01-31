@@ -1,11 +1,6 @@
 package main.boj;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by geonyeong.kim on 2021-01-27
