@@ -6,37 +6,19 @@ package main.leetcode;
 public class ProductOfArrayExceptSelf {
 
     public int[] productExceptSelf(int[] nums) {
-        int total = 1;
-        int realTotal = 1;
-        int zeroFlag = 0, oneFlag = 0;
-
-        for (int num : nums) {
-            if(num == 0) {
-                zeroFlag++;
-                realTotal *= num;
-            } else if (num == 1) {
-                oneFlag++;
-            } else {
-                realTotal *= num;
-                total *= num;
-            }
-        }
 
         int[] answer = new int[nums.length];
-        for (int i = 0; i < nums.length; i++) {
-            if(nums[i] == 0 && zeroFlag < 2) {
-                answer[i] = total;
-            } else if (nums[i] == 0 && zeroFlag >= 2) {
-                answer[i] = 0;
-            } else {
-                int ans = realTotal / nums[i];
-                if(nums[i] != -1 && ans == 1 && oneFlag < 2) {
-                    answer[i] = 0;
-                } else if (nums[i] != -1 && ans == 1 && oneFlag >= 2){
-                    answer[i] = 1;
-                } else answer[i] = ans;
-            }
+        answer[0] = 1;
+        for (int i = 1; i < nums.length; i++) {
+            answer[i] = nums[i - 1] * answer[i - 1];
         }
+
+        int rightVal = 1;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            answer[i] *= rightVal;
+            rightVal *= nums[i];
+        }
+
         return answer;
     }
 
