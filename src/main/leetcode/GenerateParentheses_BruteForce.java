@@ -9,12 +9,11 @@ import java.util.Stack;
  */
 public class GenerateParentheses_BruteForce {
 
-    private List<String> answer;
+    private static List<String> answer;
 
     public List<String> generateParenthesis(int n) {
         answer = new ArrayList<>();
         dfs("(", n * 2);
-        dfs(")", n * 2);
         return answer;
     }
 
