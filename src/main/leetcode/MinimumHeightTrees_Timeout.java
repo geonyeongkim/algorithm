@@ -1,5 +1,6 @@
 package main.leetcode;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,13 +30,13 @@ public class MinimumHeightTrees_Timeout {
             connect.get(edge[1]).add(edge[0]);
         }
 
-        Queue<Integer> queue;
+        Queue<Integer> queue = new LinkedList<>();
 
         boolean[] visit;
 
         for (int i = 0; i < n; i++) {
             visit = new boolean[n];
-            queue = new LinkedList<>();
+            queue.clear();
             int cnt = 0;
 
             // bfs 를 통해 확인
@@ -47,30 +48,15 @@ public class MinimumHeightTrees_Timeout {
                 visit[node] = true;
             }
 
-            // visit check
-            boolean flag = true;
-
-            for (boolean b : visit) {
-                if(!b) {
-                    flag = false;
-                    break;
-                }
-            }
-
-            if(flag) {
+            if(checkVisit(visit)) {
                 list.add(i, cnt);
                 continue;
             }
 
             while(!queue.isEmpty()) {
-                List<Integer> copyList = new ArrayList<>();
-
-                while(!queue.isEmpty()) {
-                    copyList.add(queue.poll());
-                }
-
-                for (int node : copyList) {
-                    for(int connectNode: connect.get(node)) {
+                int size = queue.size();
+                while(size-- > 0) {
+                    for(int connectNode: connect.get(queue.poll())) {
                         if(!visit[connectNode]) {
                             queue.add(connectNode);
                             visit[connectNode] = true;
@@ -80,16 +66,7 @@ public class MinimumHeightTrees_Timeout {
 
                 cnt++;
                 // visit check
-                flag = true;
-
-                for (boolean b : visit) {
-                    if(!b) {
-                        flag = false;
-                        break;
-                    }
-                }
-
-                if(flag) break;
+                if(checkVisit(visit)) break;
             }
             list.add(i, cnt);
         }
@@ -105,6 +82,13 @@ public class MinimumHeightTrees_Timeout {
         }
 
         return answer;
+    }
+
+    private boolean checkVisit(boolean[] visits) {
+        for (boolean visit : visits) {
+            if(!visit) return false;
+        }
+        return true;
     }
 
     public static void main(String[] args) {
