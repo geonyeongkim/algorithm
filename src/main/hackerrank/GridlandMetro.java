@@ -13,25 +13,25 @@ import java.util.Map;
  */
 public class GridlandMetro {
 
-    static BigInteger gridlandMetro(long n, long m, int k, int[][] track) {
-        BigInteger answer = BigInteger.valueOf(n * m);
+    static long gridlandMetro(long n, long m, int k, int[][] track) {
+        long answer = n * m;
 
         // 행별 (min cell, max cell) list
-        Map<Integer, List<int[]>> map = new HashMap<>();
+        Map<Integer, List<long[]>> map = new HashMap<>();
 
         // 행별 track 들 list로 넣기
         for (int i = 0; i < track.length; i++) {
             if(map.get(track[i][0]) == null) {
                 map.put(track[i][0], new ArrayList<>());
-                map.get(track[i][0]).add(new int[]{track[i][1], track[i][2]});
+                map.get(track[i][0]).add(new long[]{track[i][1], track[i][2]});
             } else {
-                map.get(track[i][0]).add(new int[]{track[i][1], track[i][2]});
+                map.get(track[i][0]).add(new long[]{track[i][1], track[i][2]});
             }
         }
 
         int idx;
 
-        for (List<int[]> list : map.values()) {
+        for (List<long[]> list : map.values()) {
             // 행에 있는 track들을 시작점 기준으로 정렬
             Collections.sort(list, Comparator.comparing((ints -> ints[0])));
             idx = 0;
@@ -53,9 +53,9 @@ public class GridlandMetro {
 
         // 최종적으로 나온 track들의 정보를 가지고 심을수 있는 가로등 수 계산
         // n * m 에서 track이 심어져 있는 cnt를 뺌
-        for (List<int[]> values : map.values()) {
-            for (int[] value : values) {
-                answer = answer.subtract(BigInteger.valueOf(Long.valueOf(value[1] - value[0] + 1)));
+        for (List<long[]> values : map.values()) {
+            for (long[] value : values) {
+                answer -= (value[1] - value[0] + 1);
             }
         }
 
@@ -63,7 +63,7 @@ public class GridlandMetro {
     }
 
     public static void main(String[] args) {
-        BigInteger ans = GridlandMetro.gridlandMetro(4, 4, 3, new int[][]{{2, 2, 3}, {3, 1, 4}, {4, 4, 4}});
+        long ans = GridlandMetro.gridlandMetro(4, 4, 3, new int[][]{{2, 2, 3}, {3, 1, 4}, {4, 4, 4}});
         System.out.println(ans);
         ans = GridlandMetro.gridlandMetro(4, 4, 4, new int[][]{{1, 1, 4}, {2, 2, 4}, {3, 1, 2}, {4, 2, 3}});
         System.out.println(ans);
