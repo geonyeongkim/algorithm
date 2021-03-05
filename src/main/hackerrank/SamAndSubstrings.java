@@ -1,4 +1,4 @@
-package main.leetcode;
+package main.hackerrank;
 
 /**
  * Created by geonyeong.kim on 2021-03-04
