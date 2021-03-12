@@ -13,11 +13,9 @@ public class MergeStringsAlternately {
         for(int i = 0; i < minLength; i++) {
             sb.append(word1.charAt(i)).append(word2.charAt(i));
         }
-
         for(int i = minLength; i < maxStr.length(); i++) {
             sb.append(maxStr.charAt(i));
         }
-
         return sb.toString();
     }
 
