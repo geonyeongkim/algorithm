@@ -5,9 +5,9 @@ public class Test3 {
     private static int answer;
 
     int solution(int[][] board) {
-        answer = -1;
+        answer = 0;
 
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             bruteForce(board, 0, i);
         }
 
@@ -15,8 +15,8 @@ public class Test3 {
     }
 
     private void bruteForce(int[][] board, int cnt, int dir) {
-        if(cnt == 5) {
-            int val = -1;
+        if (cnt == 5) {
+            int val = 0;
             for (int i = 0; i < board.length; i++) {
                 for (int j = 0; j < board[i].length; j++) {
                     val = Math.max(val, board[i][j]);
@@ -156,7 +156,7 @@ public class Test3 {
 
     public static void main(String[] args) {
         Test3 test3 = new Test3();
-        int ans = test3.solution(new int[][]{{2, 4, 8, 2}, {2, 2, 2, 2}, { 0, 4, 2, 4}, {2, 2, 2, 4}});
+        int ans = test3.solution(new int[][]{{2, 4, 8, 2}, {2, 2, 2, 2}, {0, 4, 2, 4}, {2, 2, 2, 4}});
         System.out.println(ans);
     }
 }
