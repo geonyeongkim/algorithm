@@ -1,9 +1,10 @@
-package main.leetcode;
+package main.leetcode.trie;
 
 import java.util.*;
 
-public class PrefixAndSuffixSearch {
+public class PrefixAndSuffixSearchTimeLimitExceeded {
 
+    // Time Limit Exceeded
     static class WordFilter {
 
         private static final int PREFIX_VAL = 1;
