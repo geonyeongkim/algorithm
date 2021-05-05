@@ -21,13 +21,13 @@ public class PrefixAndSuffixSearch {
             trie = new Trie();
 
             for(int weight = 0; weight < words.length; weight++) {
-                String word = words[weight];
+                String word = words[weight] + "#";
 
                 for(int i = 0; i < word.length(); i++) {
                     Trie cur = trie;
                     cur.weight = weight;
 
-                    for(int j = i; j < (word.length() * 2); j++) {
+                    for(int j = i; j < (word.length() * 2) - 1; j++) {
                         char c = word.charAt(j % word.length());
 
                         if(cur.childrens.get(c) == null) {
@@ -43,7 +43,7 @@ public class PrefixAndSuffixSearch {
         public int f(String prefix, String suffix) {
 
             Trie cur = trie;
-            for(char c : (suffix + prefix).toCharArray()) {
+            for(char c : (suffix + "#" + prefix).toCharArray()) {
                 if(cur.childrens.get(c) == null) return -1;
                 else cur = cur.childrens.get(c);
             }
