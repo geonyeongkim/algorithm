@@ -58,6 +58,6 @@ public class CourseScheduleIII {
         // expect = 5
         ans = courseScheduleIII.scheduleCourse(new int[][]{{5,15},{3,19},{6,7},{2,10},{5,16},{8,14},{10,11},{2,19}});
         System.out.println(ans);
-        
+
     }
 }
